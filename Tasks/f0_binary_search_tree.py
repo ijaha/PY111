@@ -68,8 +68,24 @@ def find(key: int) -> Optional[Any]:
     :param key: key for search in the BST
     :return: value associated with the corresponding key
     """
-    print(key)
-    return None
+    def recursion_find(current_node):
+        if key > current_node['key']:
+            if not current_node['right']:
+                raise KeyError
+            else:
+                return recursion_find(current_node['right'])
+        elif key < current_node['key']:
+            if not current_node['left']:
+                raise KeyError
+            else:
+                return recursion_find(current_node['left'])
+        elif key == current_node['key']:
+            return current_node['value']
+
+    if not tree:
+        raise KeyError
+    else:
+        return recursion_find(tree)
 
 
 def clear() -> None:
