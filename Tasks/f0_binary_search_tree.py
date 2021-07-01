@@ -27,25 +27,24 @@ def insert(key: int, value: Any) -> None:
     """
     global tree
 
-    def recursion_insert(current_node: dict,
-                         key, value):
+    def recursion_insert(current_node: dict):
         if key > current_node['key']:
             if not current_node['right']:
                 current_node['right'] = create_node(key, value)
             else:
-                recursion_insert(current_node['right'], key, value)
+                recursion_insert(current_node['right'])
         elif key < current_node['key']:
             if not current_node['left']:
                 current_node['left'] = create_node(key, value)
             else:
-                recursion_insert(current_node['left'], key, value)
+                recursion_insert(current_node['left'])
         elif key == current_node['key']:
             current_node['value'] = value
 
     if not tree:
         tree = create_node(key, value)
     else:
-        recursion_insert(tree, key, value)
+        recursion_insert(tree)
 
     print(key, value)
     return None
