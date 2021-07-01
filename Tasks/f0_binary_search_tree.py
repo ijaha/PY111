@@ -6,6 +6,16 @@ or with dicts (smth like {'key': 0, value: 123, 'left': {...}, 'right':{...}})
 from typing import Any, Optional, Tuple
 # import networkx as nx
 
+# дерево бинарного поиска
+tree = {}
+
+def create_node(key, value):
+    return {
+    'key': key,
+    'value': value,
+    'left': {},     # None
+    'right': {}
+    }
 
 def insert(key: int, value: Any) -> None:
     """
@@ -15,6 +25,28 @@ def insert(key: int, value: Any) -> None:
     :param value: value associated with key
     :return: None
     """
+    global tree
+
+    def recursion_insert(current_node: dict,
+                         key, value):
+        if key > current_node['key']:
+            if not current_node['right']:
+                current_node['right'] = create_node(key, value)
+            else:
+                recursion_insert(current_node['right'], key, value)
+        elif key < current_node['key']:
+            if not current_node['left']:
+                current_node['left'] = create_node(key, value)
+            else:
+                recursion_insert(current_node['left'], key, value)
+        elif key == current_node['key']:
+            current_node['value'] = value
+
+    if not tree:
+        tree = create_node(key, value)
+    else:
+        recursion_insert(tree, key, value)
+
     print(key, value)
     return None
 
@@ -47,4 +79,6 @@ def clear() -> None:
 
     :return: None
     """
+    global tree
+    tree = {}   # tree.clear()
     return None
